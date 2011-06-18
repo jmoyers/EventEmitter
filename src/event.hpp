@@ -31,7 +31,7 @@ public:
    EventEmitter(){};
    ~EventEmitter(){};
    
-   void addListener(string channel, boost::function<void (T)> listener){      
+   void addListener(string channel, listener_type listener){      
       vector<string> channels;
       boost::split(channels, channel, boost::is_any_of("."));
       
