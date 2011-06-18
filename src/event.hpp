@@ -14,7 +14,7 @@ public:
    typedef vector<listener_type> listener_list;
 
    struct Node;
-   typedef map<string, Node> listener_node;
+   typedef map<string, Node> branch_map;
    
    struct Ghost {
       vector<string> markers;
@@ -23,7 +23,7 @@ public:
    
    struct Node {
       string name;
-      listener_node branches;
+      branch_map branches;
       listener_list listeners;
       vector<Ghost *> wanderers;
    } node_t;   
