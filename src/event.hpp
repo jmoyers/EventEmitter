@@ -25,7 +25,6 @@ public:
 		string name;
 		listener_node branches;
 		listener_list listeners;
-		vector<Ghost *> ghosts;
 		vector<Ghost *> wanderers;
 	} node_t;	
 	
@@ -50,7 +49,6 @@ public:
 				currNode->wanderers.push_back(ghost);
 				return;
 			} else {
-				currNode->ghosts.push_back(ghost);
 				currNode = &currNode->branches[*i];
 				currNode->name = *i;
 			}
@@ -78,21 +76,6 @@ public:
 		
 		for (vector<string>::iterator i = channels.begin(); i != channels.end(); i++) {
 			found = false;
-			
-			// if (*i == "*") {
-			// 	this->printNode(*currNode);
-			// 	for (typename vector<Ghost *>::iterator ii = currNode->ghosts.begin(); ii != currNode->ghosts.end(); ii++) {
-			// 		this->printVector((*ii)->markers);
-			// 		this->printVector(channels);
-			// 		cout << "Compared " << this->compareMarkers((*ii)->markers, channels) << endl;
-			// 		if ((ii+1) == currNode->ghosts.end() || this->compareMarkers((*ii)->markers, channels)) {
-			// 			listeners.push_back((*ii)->listener);
-			// 		}
-			// 	}
-			// 	listeners.insert(listeners.end(), currNode->listeners.begin(), currNode->listeners.end());
-			// 	return;
-			// }
-			
 			if (currNode->branches.find(*i) != currNode->branches.end()) {
 				for (typename vector<Ghost *>::iterator ii = currNode->wanderers.begin(); ii != currNode->wanderers.end(); ii++) {
 					if (this->compareMarkers((*ii)->markers, channels)) {
@@ -135,7 +118,7 @@ private:
 		cout << "Node name     : " << node.name << endl;
 		cout << "Listener count: " << node.listeners.size() << endl;
 		cout << "Branch count  : " << node.branches.size() << endl;
-		cout << "Ghost count   : " << node.ghosts.size() << endl;
+		cout << "Wanderer count: " << node.wanderer.size() << endl;
 	}
 	
 	void printVector(vector<string> &v) {
