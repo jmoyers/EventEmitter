@@ -58,28 +58,18 @@ public:
    }
    
    void emit(string channel, T payload){
-      listener_list list;
-      
-      this->getListeners(list, channel);
-      
-      for(typename listener_list::iterator i = list.begin(); i != list.end(); i++) {
-         ((listener_type)*i)(payload);
-      }
-   }
-   
-   void getListeners(listener_list &listeners, string channel) {
       vector<string> channels;
       boost::split(channels, channel, boost::is_any_of("."));
 
       Node *currNode = &this->listeners;
       bool found = false;
-      
+
       for (vector<string>::iterator i = channels.begin(); i != channels.end(); i++) {
          found = false;
          if (currNode->branches.find(*i) != currNode->branches.end()) {
             for (typename vector<Ghost *>::iterator ii = currNode->wanderers.begin(); ii != currNode->wanderers.end(); ii++) {
                if (this->compareMarkers((*ii)->markers, channels)) {
-                  listeners.push_back((*ii)->listener);
+                  ((*ii)->listener)(payload);
                }
             }
             found = true;
@@ -88,10 +78,16 @@ public:
             return;
          }
       }
-      
+
       if (found) {
-         listeners.insert(listeners.end(), currNode->listeners.begin(), currNode->listeners.end());
+         for (int i = 0; i < currNode->listeners.size(); i++) {
+            currNode->listeners[i](payload);
+         }
       }
+   }
+   
+   void removeListener(string channel, listener_type listener) {
+      
    }
 private:
    Node listeners;

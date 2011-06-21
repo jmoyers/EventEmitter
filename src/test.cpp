@@ -2,15 +2,16 @@
 #include "event.hpp"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
+#include <sys/time.h>
 
 using namespace std;
 
 void string_handler(string identifier, string payload){
-   cout << identifier << ": " << payload << " fired" << endl;
+  cout << identifier << ": " << payload << " fired" << endl;
 }
 
 void int_handler(string identifier, int payload){
-   cout << identifier << ": " << payload << " fired" << endl;
+  cout << identifier << ": " << payload << " fired" << endl;
 }
 
 int main(){
