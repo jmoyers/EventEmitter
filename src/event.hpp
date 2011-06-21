@@ -93,19 +93,11 @@ private:
    Node listeners;
    
    bool compareMarkers(vector<string> &a, vector<string> &b){
-      int ai = a.size() - 1;
-
-      if (ai < 0)
-         return true;
-         
-      int bi = b.size() - 1;
-      
-      for (;ai >= 0 && bi >= 0; ai--, bi--){
+      for (int ai = a.size()-1, bi = b.size()-1;ai >= 0 && bi >= 0; ai--, bi--){
          if (a[ai] != b[bi]) {
             return false;
          }
       }   
-      
       return true;
    }
    
